@@ -15,6 +15,16 @@
       #quiz-id {
         display: inline;
       }
+
+      main {
+
+        margin: 0px !important;
+        background-color: steelblue;
+        min-width: 100% !important;
+        min-height: 100% !important;
+
+      }
+
       /* Body must be flush to the edge of the window.*/
       body {
         margin: auto;
@@ -25,13 +35,21 @@
         display: inline;
 
       }
+
+      #content-wrapper {
+
+        margin: auto;
+        padding: 0px;
+
+      }
+
       /* Content Section {Wraps whole Wrapper} */
       /* Wrapper Section */
       #quiz-wrapper {
         display: grid;
         /* Five Rows */
-        grid-template-rows: minmax(20vh, auto) minmax(60vh, auto) minmax(auto, auto) minmax(2vh, auto) minmax(10vh, auto) minmax(5vh, auto);
-        grid-template-columns: auto;
+        grid-template-rows: minmax(20vh, auto) minmax(60vh, auto) auto minmax(2vh, auto) minmax(10vh, auto) minmax(5vh, auto);
+        grid-template-columns: 1fr;
 
         /* Gap between rows. */
         grid-gap: 0px;
@@ -40,11 +58,12 @@
         background-color: rgba(0, 0, 49, 1);
         padding-top: 0px;
         padding-bottom: 0px;
-        overflow: visible;
+        overflow: hidden;
 
         margin: auto;
-        width: 100%;
-        height: 100%;
+        min-width: 100%;
+        min-height: 100%;
+
       }
       .border {
         /*border: 0px black solid;*/
@@ -58,12 +77,13 @@
       #banner {
 
         text-align: center;
+        background-color: rgba(0, 0, 49, 1);
 
       }
       /* Row One Section */
       #row-one {
         display: grid;
-        grid-template-columns: 100vw;
+        grid-template-columns: 1fr;
 
       }
       #question {
@@ -79,7 +99,7 @@
       /* Row Two Section */
       #row-two {
         display: grid;
-        grid-template-columns: 50vw 50vw;
+        grid-template-columns: 1fr 1fr;
       }
       /* Quiz section oraganizes the quiz questions into a grid. */
       #quiz {
@@ -148,7 +168,7 @@
       /* Row Five Section */
       #row-five {
         display: grid;
-        grid-template-columns: 50vw 50vw;
+        grid-template-columns: 1fr 1fr;
 
       }
       #previous-quiz {
@@ -202,7 +222,7 @@
 
 <body>
 
-  <div id="content-wrapper">
+  <main>
 
     <div id="banner">
 
@@ -298,7 +318,10 @@
     <!-- End of Quiz Wrapper -->
   </div>
 
+  </main>
+
 </body>
+
 <script type="text/javascript">
   // This class defines the interface elements of the quiz's UI.
   class Quiz {
