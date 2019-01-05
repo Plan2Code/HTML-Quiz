@@ -335,8 +335,6 @@
       font-weight: bold;
       background-color: darkslategrey;
 
-      padding: 10px;
-
     }
 
 
@@ -361,7 +359,7 @@
     <section id="question-number-and-score-section">
 
       <div class="border" id="question-number">Question #<span id="quiz-id"></span></div>
-      <div class="center-content" id="score-div"><strong>Score:&nbsp<strong><span id="score">0</span>/10</div>
+      <div class="center-content" id="score-div"><span id="score">0</span>/10</div>
 
 
     </section>
@@ -631,29 +629,55 @@
   //  Controls which quiz comes next.
   lesson.nextQuiz.onclick = forward
 
+  let questionAnsweredList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
   function checkAnswer(choice) {
 
+      let currentQuestion = new Number(lesson.quizID.textContent);
 
+      //  If the answer is found.
       if (choice == lesson.answer.textContent) {
 
+        //  Show that the response is correct.
         lesson.quizOutput.style.backgroundColor = "lightgreen";
         lesson.quizOutput.textContent = lesson.feedback;
 
-        //  Updates score.
-        scoreValue.previousValue = scoreValue.currentValue;
-        scoreValue.currentValue = scoreValue.currentValue + 1;
-        scoreElement.textContent = `${scoreValue.currentValue}`;
+        //  Check whether the answer has been found before.
+        if (questionAnsweredList[currentQuestion] == 1) {
+
+          //  Do nothing.
+
+        } else {
+
+          questionAnsweredList[currentQuestion] = 1;
+
+          //  Updates score.
+          scoreValue.previousValue = scoreValue.currentValue;
+          scoreValue.currentValue = scoreValue.currentValue + 1;
+          scoreElement.textContent = `${scoreValue.currentValue}`;
+
+
+        }
 
       } else {
 
+        //  Show that the response is incorrect.
         lesson.quizOutput.style.backgroundColor = "lightcoral";
-        lesson.quizOutput.textContent = "Try again.";
+        lesson.quizOutput.textContent = "Incorrect. Please try again.";
 
-        //  Updates score.
-        scoreValue.previousValue = scoreValue.currentValue;
-        scoreValue.currentValue = scoreValue.currentValue - 1;
-        scoreElement.textContent = `${scoreValue.currentValue}`;
 
+        //  Check whether the answer has been found before.
+        if (questionAnsweredList[currentQuestion] == 1) {
+
+          questionAnsweredList[currentQuestion] = 0;
+
+          //  Updates score.
+          scoreValue.previousValue = scoreValue.currentValue;
+          scoreValue.currentValue = scoreValue.currentValue - 1;
+          scoreElement.textContent = `${scoreValue.currentValue}`;
+
+
+        }
       }
 
   }
