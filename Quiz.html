@@ -2,13 +2,19 @@
 <html>
 
 <head>
+
+  <!-- @ 2019 Curtis A. Warren Plan2Code -->
+  
   <meta charset="utf-8">
   <title>Quiz</title>
   <style>
 
     #question-number {
 
-      background-color: #aceace;
+      color: white;
+      font-family: Verdana, Arial;
+
+      background-color: rgba(0, 0, 49, 1);
       width: auto;
 
     }
@@ -53,7 +59,7 @@
       display: grid;
       /* Five Rows */
       /* Five banner and footer are hidden (i.e. display none) */
-      grid-template-rows: minmax(20vh, auto) minmax(40vh, auto) minmax(10vh, auto) minmax(5vh, auto) auto;
+      grid-template-rows: minmax(20vh, auto) minmax(40vh, auto) minmax(10vh, auto) auto;
       grid-template-columns: 1fr;
 
       /* Gap between rows. */
@@ -103,7 +109,8 @@
     }
 
     #question {
-      background-color: rgba(245, 245, 245, .94);
+      background-color: rgba(0, 0, 49, 1);
+      color: white;
       font-family: "Helvetica", Arial, sans-serif;
       font-weight: 500;
       border-bottom: 5px rgba(0, 0, 60, 1) solid;
@@ -217,28 +224,6 @@
       background-color: blue;
     }
 
-    /* Row Four Section */
-
-    #row-four {
-      display: grid;
-      grid-template-areas: 'feedback feedback feedback feedback feedback';
-      background-color: white;
-
-    }
-
-    #feedback {
-      grid-area: feedback;
-      display: none;
-      border-top: 5px rgba(0, 0, 60, 1) solid;
-      background-color: rgba(245, 245, 245, .94);
-    }
-
-    #feedback-audio {
-      /*grid-area: feedback-audio;*/
-      display: none;
-      background-color: rgba(46, 43, 42, 1);
-    }
-
     /* Row Five Section */
 
     #row-five {
@@ -333,6 +318,38 @@
 
       text-decoration: underline;
     }
+
+    #question-number-and-score-section  {
+
+
+      display: grid;
+      grid-template-columns: 4fr 1fr;
+      width: 100%;
+
+    }
+
+    #score-div {
+
+      color: white;
+      font-family: Verdana, Arial;
+      background-color: black;
+      border-left: 2px solid white;
+      border-right: 2px solid white;
+      border-bottom: 2px solid white;
+      padding: 10px;
+
+    }
+
+
+    .center-content {
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+    }
+
+
   </style>
 </head>
 
@@ -342,7 +359,13 @@
 
     <header class="spacing lesson-header">Plan2Code <span class="bright">HTML Quiz</span></header>
 
-    <div class="border" id="question-number">Question #<span id="quiz-id"></span></div>
+    <section id="question-number-and-score-section">
+
+      <div class="border" id="question-number">Question #<span id="quiz-id"></span></div>
+      <div class="center-content" id="score-div"><strong>Score:&nbsp<strong><span id="score">0</span>/10</div>
+
+
+    </section>
 
     <div id="quiz-wrapper">
       <!-- Quiz id is hidden and it keeps track of quizzes. -->
@@ -388,7 +411,7 @@
           <p><b>b.&nbsp</b><input id="quiz-b" type="radio" name="Response" value="">&nbsp&nbsp<span id="quiz-b-label" for="quiz-b"></span></p>
           <p><b>c.&nbsp</b><input id="quiz-c" type="radio" name="Response" value="">&nbsp&nbsp<span id="quiz-c-label" for="quiz-c"></span></p>
         </div>
-        <div id="quiz-output" class="border">Output goes here...</div>
+        <div id="quiz-output" class="border">Select a response.</div>
 
       </div>
 
@@ -398,15 +421,6 @@
 
         <div id="answer" class="border"></div>
         <div id="answer-check" class="border"></div>
-
-      </div>
-
-      <!-- Feedback and audio feedback section. -->
-
-      <div id="row-four">
-
-        <div id="feedback" class="border"></div>
-        <div id="feedback-audio" class="border">⏯</div>
 
       </div>
 
@@ -440,7 +454,7 @@
         <br>
         <strong>Published</strong> January 1st, 2019 at 12:35pm EST
         <br>
-        <strong>Last Updated</strong> January 2nd, 2019 at 5:00pm EST
+        <strong>Last Updated</strong> January 3rd, 2019 at 10:00pm EST
         <br>
         <br> © 2018 Curtis A. Warren. All rights reserved. <br><br><a class="underline-link" href="https://Plan2Code.org">Plan2Code.org</a>
 
@@ -456,96 +470,108 @@
   // This class defines the interface elements of the quiz's UI.
   class Quiz {
 
-    loadQuiz(whitchQuiz) {
+    loadQuiz(whichQuiz) {
 
       let lessons = [{
           "quizID": 0,
           "question": "Elements have default styling, given to them by the browser they are run in.  Which of the following selected responses organizes the heading tags in descending order?",
           "quiz": ["h1, h4, h5", "h1, h4, h2", "h2, h4, h5"],
-          "answer": "h1, h4, h5",
-          "feedback": "Great work!"
+          "answer": "a",
+          "feedback": "Correct! Great work!"
+
         },
         {
           "quizID": 1,
           "question": "If I wanted to add a image to an img tag I would use a certain image attribute.  What attribute would that be?",
           "quiz": ["src", "width", "opacity"],
-          "answer": "src",
-          "feedback": "Nice job!"
+          "answer": "a",
+          "feedback": "Correct! Fantastic!"
+
         },
         {
           "quizID": 2,
           "question": "Which of these elements would make for a good heading for a webpage?",
           "quiz": ["<h1>Webpage</h1>", "<p>Webpage</p>", "<span> Webpage</span>"],
-          "answer": "<h1>Webpage</h1>",
-          "feedback": "Wow!"
+          "answer": "a",
+          "feedback": "Correct! You are doing great!"
+
         },
         {
           "quizID": 3,
           "question": "When we are trying to find bugs in our code, what is this process is called?",
           "quiz": ["coding", "debugging", "reading"],
-          "answer": "debugging",
-          "feedback": "You're a true coder today!"
+          "answer": "b",
+          "feedback": "Correct! That's right!"
+
         },
         {
           "quizID": 4,
           "question": "Business logic, UI design, and data storage are the chief components of a software program.  At what phase of the SDLC (software development lifecycle) are the business needs uncovered.",
           "quiz": ["Implementation Phase", "Design Phase", "Requirements Phase"],
-          "answer": "Requirements Phase",
-          "feedback": "Now, you are a true software engineer!"
+          "answer": "c",
+          "feedback": "Correct! Keep it up!"
+
         },
         {
           "quizID": 5,
           "question": "Semi-colons are optional in a few langauges.  In which of the following languages/web tools are semi-colons optional.",
           "quiz": ["CSS", "JavaScript", "C++"],
-          "answer": "JavaScript",
-          "feedback": "Woah, woah!"
+          "answer": "b",
+          "feedback": "Correct! Good Job!"
+
         },
         {
           "quizID": 6,
           "question": "Which of the following is not a block element, by default?",
           "quiz": ["span", "h2", "p"],
-          "answer": "span",
-          "feedback": "Correct!"
+          "answer": "a",
+          "feedback": "Correct! Nice work!"
+
         },
         {
           "quizID": 7,
           "question": "Which of the following pieces of code will display its contents next to each other (without starting each piece of content on a separate new line).",
           "quiz": ["<span>1</span><span>2</span><span>3</span>", "<section>1</section><section>2</section><section>3</section>", "<p>1</p><p>2</p><p>3</p>"],
-          "answer": "<span>1</span><span>2</span><span>3</span>",
-          "feedback": "Wow!  Wow!"
+          "answer": "a",
+          "feedback": "Correct! You got it!"
+
         },
         {
           "quizID": 8,
           "question": "Which of the following pieces of code will produce the following output: <i>HTML Beginner's Course</i>",
           "quiz": ["<p>HTML Beginner's Course</p>", "<i>HTML Beginner's Course</i>", "<b>HTML Beginner's Course</b>"],
-          "answer": "<i>HTML Beginner's Course</i>",
-          "feedback": "Awesome work!"
+          "answer": "b",
+          "feedback": "Correct! Awesome work!"
+
         },
         {
           "quizID": 9,
           "question": "Which of the following elements helps us when we want to place a webpage inside of our own webpage?",
           "quiz": ["iframe", "br", "div"],
-          "answer": "iframe",
-          "feedback": "Great work!"
+          "answer": "a",
+          "feedback": "Correct! Great work!"
+
         }
 
       ];
 
-      if (whitchQuiz < 0 || whitchQuiz >= lessons.length) {
+      if (whichQuiz < 0 || whichQuiz >= lessons.length) {
         return
       }
 
+      this.question.innerHTML = lessons[whichQuiz].question;
 
-      this.question.innerHTML = lessons[whitchQuiz].question;
+      this.answer.innerHTML = lessons[whichQuiz].answer;
 
-      this.answer.innerHTML = lessons[whitchQuiz].answer;
+      this.quizID.textContent = lessons[whichQuiz].quizID + 1;
+      //  Feedback holds the feedback as a string.
+      this.feedback = lessons[whichQuiz].feedback;
 
-      this.quizID.textContent = lessons[whitchQuiz].quizID + 1;
-      this.feedback.textContent = lessons[whitchQuiz].feedback;
+      this.attempts = lessons[whichQuiz].attempts;
 
-      this.quizALabel.textContent = lessons[whitchQuiz].quiz[0];
-      this.quizBLabel.textContent = lessons[whitchQuiz].quiz[1];
-      this.quizCLabel.textContent = lessons[whitchQuiz].quiz[2];
+      this.quizALabel.textContent = lessons[whichQuiz].quiz[0];
+      this.quizBLabel.textContent = lessons[whichQuiz].quiz[1];
+      this.quizCLabel.textContent = lessons[whichQuiz].quiz[2];
 
 
     }
@@ -566,8 +592,8 @@
 
       this.quizOutput = document.getElementById("quiz-output");
       this.answer = document.getElementById("answer");
-      this.feedback = document.getElementById("feedback");
-      this.feedbackAudio = document.getElementById("feedback-audio");
+      this.feedback = "";
+
       this.nextQuiz = document.getElementById("next-quiz");
       this.previousQuiz = document.getElementById("previous-quiz");
       // Quiz Section
@@ -577,6 +603,9 @@
   }
 
   let lesson = new Quiz();
+  let scoreElement = document.getElementById("score");
+  //  Holds previous and current value of the score to manage change in answers.
+  let scoreValue = {previousValue: 0, currentValue: 0};
 
   console.log(lesson);
 
@@ -603,36 +632,48 @@
   //  Controls which quiz comes next.
   lesson.nextQuiz.onclick = forward
 
-  function checkAnswer() {
+  function checkAnswer(choice) {
 
-    if (lesson.quizOutput.innerHTML == lesson.answer.innerHTML) {
 
-      lesson.quizOutput.style.backgroundColor = defaultColor;
-      lesson.feedback.style.display = "block";
+      if (choice == lesson.answer.textContent) {
 
-    } else {
+        lesson.quizOutput.style.backgroundColor = "lightgreen";
+        lesson.quizOutput.textContent = lesson.feedback;
 
-      lesson.quizOutput.style.backgroundColor = defaultColor;
-      lesson.feedback.style.display = "none";
+        //  Updates score.
+        scoreValue.previousValue = scoreValue.currentValue;
+        scoreValue.currentValue = scoreValue.currentValue + 1;
+        scoreElement.textContent = `${scoreValue.currentValue}`;
 
-    }
+      } else {
+
+        lesson.quizOutput.style.backgroundColor = "lightcoral";
+        lesson.quizOutput.textContent = "Try again.";
+
+        //  Updates score.
+        scoreValue.previousValue = scoreValue.currentValue;
+        scoreValue.currentValue = scoreValue.currentValue - 1;
+        scoreElement.textContent = `${scoreValue.currentValue}`;
+
+      }
 
   }
 
   lesson.quizA.onclick = function() {
 
-    lesson.quizOutput.innerHTML = lesson.quizALabel.textContent;
-    checkAnswer()
+    checkAnswer("a")
+
   }
+
   lesson.quizB.onclick = function() {
 
-    lesson.quizOutput.innerHTML = lesson.quizBLabel.textContent;
-    checkAnswer()
+    checkAnswer("b")
+
   }
   lesson.quizC.onclick = function() {
 
-    lesson.quizOutput.innerHTML = lesson.quizCLabel.textContent;
-    checkAnswer()
+    checkAnswer("c");
+
   }
 
   window.onkeydown = function(ev) {
@@ -672,9 +713,7 @@
 
     }
 
-    lesson.quizOutput.textContent = "";
     lesson.quizOutput.style.backgroundColor = defaultColor;
-    lesson.feedback.style.display = "none";
 
   }
 
@@ -690,6 +729,9 @@
     //  ...from current lesson.
     lesson.loadQuiz(next);
 
+    lesson.quizOutput.textContent = "Select a response.";
+
+
   }
 
   function back() {
@@ -703,7 +745,6 @@
     //  Loads the next quiz...
     //  ...from current lesson.
     lesson.loadQuiz(next);
-
 
   }
 </script>
