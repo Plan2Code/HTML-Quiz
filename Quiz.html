@@ -27,7 +27,7 @@
 
       margin: 0px !important;
       padding: 0px !important;
-      background-color: steelblue;
+      background-color: rgb(0,0,49);
       min-width: 100% !important;
       min-height: 100% !important;
 
@@ -177,17 +177,17 @@
       overflow-x: auto;
     }
 
-    #quiz-a-label {
+    #choice-a-label {
       font-family: "Roboto Black", Arial, sans-serif;
       font-size: 25px;
     }
 
-    #quiz-b-label {
+    #choice-b-label {
       font-family: "Roboto Black", Arial, sans-serif;
       font-size: 25px;
     }
 
-    #quiz-c-label {
+    #choice-c-label {
       font-family: "Roboto Black", Arial, sans-serif;
       font-size: 25px;
     }
@@ -347,6 +347,17 @@
 
     }
 
+    .choice-section {
+
+
+      border-radius: 20px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 10px;
+      padding-right: 10px;
+
+    }
+
 
   </style>
 </head>
@@ -405,9 +416,10 @@
 
         <div id="quiz" class="border">
 
-          <p><b>a.&nbsp</b><input id="quiz-a" type="radio" name="Response" value="">&nbsp&nbsp<span id="quiz-a-label" for="quiz-a"></span></p>
-          <p><b>b.&nbsp</b><input id="quiz-b" type="radio" name="Response" value="">&nbsp&nbsp<span id="quiz-b-label" for="quiz-b"></span></p>
-          <p><b>c.&nbsp</b><input id="quiz-c" type="radio" name="Response" value="">&nbsp&nbsp<span id="quiz-c-label" for="quiz-c"></span></p>
+          <p id="choice-section-a" class="choice-section"><b>a.&nbsp</b><input id="choice-a" type="radio" name="Response" value="">&nbsp&nbsp<span id="choice-a-label" for="choice-a"></span></p>
+          <p id="choice-section-b" class="choice-section"><b>b.&nbsp</b><input id="choice-b" type="radio" name="Response" value="">&nbsp&nbsp<span id="choice-b-label" for="choice-b"></span></p>
+          <p id="choice-section-c"class="choice-section"><b>c.&nbsp</b><input id="choice-c" type="radio" name="Response" value="">&nbsp&nbsp<span id="choice-c-label" for="choice-c"></span></p>
+
         </div>
         <div id="quiz-output" class="border">Select a response.</div>
 
@@ -580,17 +592,22 @@
       this.question = document.getElementById("question");
       this.questionAudio = document.getElementById("question-audio");
       this.quiz = document.getElementById("quiz");
-      this.quizA = document.getElementById("quiz-a");
-      this.quizB = document.getElementById("quiz-b");
-      this.quizC = document.getElementById("quiz-c");
+      this.quizA = document.getElementById("choice-a");
+      this.quizB = document.getElementById("choice-b");
+      this.quizC = document.getElementById("choice-c");
 
-      this.quizALabel = document.getElementById("quiz-a-label");
-      this.quizBLabel = document.getElementById("quiz-b-label");
-      this.quizCLabel = document.getElementById("quiz-c-label");
+      this.quizALabel = document.getElementById("choice-a-label");
+      this.quizBLabel = document.getElementById("choice-b-label");
+      this.quizCLabel = document.getElementById("choice-c-label");
 
       this.quizOutput = document.getElementById("quiz-output");
       this.answer = document.getElementById("answer");
       this.feedback = "";
+
+      this.choiceSectionA = document.getElementById("choice-section-a")
+      this.choiceSectionB = document.getElementById("choice-section-b")
+      this.choiceSectionC = document.getElementById("choice-section-c")
+
 
       this.nextQuiz = document.getElementById("next-quiz");
       this.previousQuiz = document.getElementById("previous-quiz");
@@ -632,7 +649,7 @@
 
   let questionAnsweredList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-  function checkAnswer(choice) {
+  function checkAnswer(choice, choiceElement) {
 
       let currentQuestion = new Number(lesson.quizID.textContent);
 
@@ -640,6 +657,7 @@
       if (choice == lesson.answer.textContent) {
 
         //  Show that the response is correct.
+        choiceElement.style.backgroundColor = "lightgreen";
         lesson.quizOutput.style.backgroundColor = "lightgreen";
         lesson.quizOutput.textContent = lesson.feedback;
 
@@ -660,9 +678,12 @@
 
         }
 
+        return true;
+
       } else {
 
         //  Show that the response is incorrect.
+        choiceElement.style.backgroundColor = "lightcoral";
         lesson.quizOutput.style.backgroundColor = "lightcoral";
         lesson.quizOutput.textContent = "Incorrect. Please try again.";
 
@@ -679,24 +700,27 @@
 
 
         }
+
+        return false;
+
       }
 
   }
 
   lesson.quizA.onclick = function() {
 
-    checkAnswer("a")
+    checkAnswer("a", lesson.choiceSectionA)
 
   }
 
   lesson.quizB.onclick = function() {
 
-    checkAnswer("b")
+    checkAnswer("b", lesson.choiceSectionB)
 
   }
   lesson.quizC.onclick = function() {
 
-    checkAnswer("c");
+    checkAnswer("c", lesson.choiceSectionC)
 
   }
 
@@ -720,22 +744,17 @@
 
   function resetQuiz() {
 
-    if (lesson.quizA.checked == true) {
+    lesson.quizA.checked = false;
+    lesson.quizA.blur();
+    lesson.choiceSectionA.style.backgroundColor = defaultColor;
 
-      lesson.quizA.checked = false;
-      lesson.quizA.blur();
+    lesson.quizB.checked = false;
+    lesson.quizB.blur();
+    lesson.choiceSectionB.style.backgroundColor = defaultColor;
 
-    } else if (lesson.quizB.checked == true) {
-
-      lesson.quizB.checked = false;
-      lesson.quizB.blur();
-
-    } else {
-
-      lesson.quizC.checked = false;
-      lesson.quizC.blur();
-
-    }
+    lesson.quizC.checked = false;
+    lesson.quizC.blur();
+    lesson.choiceSectionC.style.backgroundColor = defaultColor;
 
     lesson.quizOutput.style.backgroundColor = defaultColor;
 
